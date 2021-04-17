@@ -7,6 +7,11 @@ spring:
     url: jdbc:mysql://localhost:3306/if_buy?serverTimezone=UTC&characterEncoding=UTF-8
     username: securus
     password: securus1234
+  devtools:
+    livereload:
+      enabled : true
+  freemarker:
+    cache: false
 
 jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -14,7 +19,8 @@ jpa:
   show-sql: true
   hibernate:
     format_sql: true
-    ddl-auto: create
+    ddl-auto: update
+
 
 logging:
   level:

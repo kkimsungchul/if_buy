@@ -26,6 +26,7 @@ import java.util.Map;
 @RestController
 public class MainController {
 
+/*
     @RequestMapping(value="/" , method = RequestMethod.GET)
     public HashMap<String,String> temp1(){
         HashMap<String,String> temp01Map = new HashMap<>();
@@ -54,6 +55,7 @@ public class MainController {
 
         return "hello Springboot PUT";
     }
+*/
 
 
 

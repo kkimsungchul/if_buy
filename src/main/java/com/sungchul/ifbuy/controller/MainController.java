@@ -2,18 +2,20 @@ package com.sungchul.ifbuy.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sungchul.ifbuy.service.CoinService;
+import com.sungchul.ifbuy.vo.CoinObject;
 import com.sungchul.ifbuy.vo.VO;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import lombok.AllArgsConstructor;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -21,12 +23,23 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @RestController
 public class MainController {
 
-/*
+
+    private CoinService coinService;
+
+    @GetMapping("newCoin")
+    public void newCoin(){
+        coinService.getCoinValue();
+    }
+    
+
+    /*
     @RequestMapping(value="/" , method = RequestMethod.GET)
     public HashMap<String,String> temp1(){
         HashMap<String,String> temp01Map = new HashMap<>();
@@ -156,6 +169,7 @@ public class MainController {
         }
         return jsonInString;
     }
+
 
 
 

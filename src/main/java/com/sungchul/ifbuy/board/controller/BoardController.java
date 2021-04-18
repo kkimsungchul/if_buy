@@ -7,14 +7,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/board")
 public class BoardController {
     private BoardService boardService;
 
 
-    @GetMapping("/")
+    @GetMapping("")
     public String list(){
         return "board/list.html";
     }
@@ -29,7 +31,7 @@ public class BoardController {
     public String write(BoardDto boardDto){
         boardService.savePost(boardDto);
 
-        return "redirect:/";
+        return "redirect:/board";
     }
 
 

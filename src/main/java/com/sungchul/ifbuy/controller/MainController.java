@@ -112,14 +112,16 @@ public class MainController {
         String jsonInString = "";
 
         try {
-
+/*
             HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
             factory.setConnectTimeout(5000); //타임아웃 설정 5초
-            factory.setReadTimeout(5000);//타임아웃 설정 5초
-            RestTemplate restTemplate = new RestTemplate(factory);
+            factory.setReadTimeout(5000);//타임아웃 설정 5초*/
+//            RestTemplate restTemplate = new RestTemplate(factory);
+            RestTemplate restTemplate = new RestTemplate();
 
             HttpHeaders header = new HttpHeaders();
             HttpEntity<?> entity = new HttpEntity<>(header);
+
 
             //String url = "https://api.hangang.msub.kr/";
             String url = "https://api.upbit.com/v1/market/all?isDetails=false";
@@ -128,6 +130,11 @@ public class MainController {
 
             //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
             ResponseEntity<Object> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
+            //엔티티안에 헤더값 들어감
+            //바디도 넣어서 보냄
+            //엔티티안에다가 이런저런 필요한 값도 넣어서함
+
+
             result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
             result.put("header", resultMap.getHeaders()); //헤더 정보 확인
             result.put("body", resultMap.getBody()); //실제 데이터 정보 확인

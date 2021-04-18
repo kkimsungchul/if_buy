@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
     private BoardService boardService;
 
-
+ 
     @GetMapping("")
     public String list(){
         return "board/list.html";

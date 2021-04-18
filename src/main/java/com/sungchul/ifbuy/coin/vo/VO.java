@@ -1,4 +1,4 @@
-package com.sungchul.ifbuy.vo;
+package com.sungchul.ifbuy.coin.vo;
 
 
 import lombok.Data;

@@ -37,8 +37,8 @@ public class MainController {
     public void newCoin(){
         coinService.getCoinValue();
     }
-    
 
+  
     /*
     @RequestMapping(value="/" , method = RequestMethod.GET)
     public HashMap<String,String> temp1(){

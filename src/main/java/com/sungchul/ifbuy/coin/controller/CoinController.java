@@ -1,6 +1,7 @@
 package com.sungchul.ifbuy.coin.controller;
 
 
+import com.sungchul.ifbuy.coin.mapper.CoinMapper;
 import com.sungchul.ifbuy.coin.service.CoinService;
 import com.sungchul.ifbuy.coin.vo.CoinVO;
 import lombok.AllArgsConstructor;
@@ -16,16 +17,21 @@ public class CoinController {
 
 
     private CoinService coinService;
+    private CoinMapper coinMapper;
 
     @GetMapping("/coinList")
     public List<CoinVO> newCoin(){
         return coinService.getCoinValue();
     }
 
-    @GetMapping("/coinPrice")
+    @GetMapping("/dbTest")
+    public void dbTest(){
+        System.out.println(coinMapper.time());
+    }
+/*    @GetMapping("/coinPrice")
     public List<CoinVO> coinPrice(){
         return coinService.getCoinPrice();
-    }
+    }*/
 
 
 

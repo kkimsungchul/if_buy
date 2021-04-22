@@ -1,6 +1,7 @@
 package com.sungchul.ifbuy.coin.service;
 
 
+import com.sungchul.ifbuy.coin.mapper.CoinMapper;
 import com.sungchul.ifbuy.coin.vo.CoinPriceVO;
 import com.sungchul.ifbuy.coin.vo.CoinVO;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@Service
+@Service("coinService")
 @AllArgsConstructor
 @Slf4j
 public class CoinService {
+
+    CoinMapper coinMapper;
 
     public List<CoinVO> getCoinValue(){
 
@@ -40,7 +43,7 @@ public class CoinService {
         return coinList;
     }
 
-    public List<CoinVO> getCoinPrice(){
+/*    public List<CoinVO> getCoinPrice(){
         List<CoinVO> coinPriceList = getCoinValue();
         String coinName;
         String url;
@@ -68,9 +71,36 @@ public class CoinService {
             coinPriceList.get(i).setCoinPriceVO(coinPriceVO);
 
         }
-
         return coinPriceList;
+    }*/
 
+
+    public CoinVO getCoinPrice(CoinVO coinVO){
+
+        String coinName;
+        String url;
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setConnectTimeout(5000); //타임아웃 설정 5초
+        factory.setReadTimeout(5000);//타임아웃 설정 5초
+        RestTemplate restTemplate = new RestTemplate(factory);
+        HttpHeaders header = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(header);
+        coinName =coinVO.getMarket();
+        url = "https://api.upbit.com/v1/candles/minutes/1?market="+coinName+"&count=1";
+        //url = "https://api.upbit.com/v1/candles/minutes/1?market=KRW-BTC&count=1";
+        ResponseEntity<List<CoinPriceVO>> res = restTemplate.exchange(url.toString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CoinPriceVO>>() {});
+        //log.info("### resList : {}" ,res);
+        //받아온 값을 리스트로 변환
+        List<CoinPriceVO> temp= res.getBody();
+        //log.info("### temp : {}" ,temp);
+
+        //리스트에 들어있는 값을 VO로 변환
+        CoinPriceVO coinPriceVO = temp.get(0);
+        //log.info("### cpv : {}" ,coinPriceVO);
+        coinVO.setCoinPriceVO(coinPriceVO);
+
+        coinMapper.insertCoinPrice(coinVO);
+        return coinVO;
     }
 }
 

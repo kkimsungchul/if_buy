@@ -16,4 +16,24 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1
 ;
 
+CREATE TABLE `coin_price` (
+	`korean_name` VARCHAR(20) NULL DEFAULT NULL COMMENT '코인명(한글)',
+	`english_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '코인명(영문)',
+	`market` VARCHAR(20) NULL DEFAULT NULL COMMENT '마켓종류(원화,BTC)',
+	`opening_price` VARCHAR(20) NULL DEFAULT NULL COMMENT '시가',
+	`high_price` VARCHAR(20) NULL DEFAULT NULL COMMENT '고가',
+	`low_price` VARCHAR(20) NULL DEFAULT NULL COMMENT '저가',
+	`trade_price` VARCHAR(20) NULL DEFAULT NULL COMMENT '종가',
+	`candle_acc_trade_price` VARCHAR(20) NULL DEFAULT NULL COMMENT '누적 거래 금액',
+	`candle_acc_trade_volume` VARCHAR(20) NULL DEFAULT NULL COMMENT '누적 거래량',
+	`unit` VARCHAR(2) NULL DEFAULT NULL COMMENT '분단위',
+	`candle_date_time_kst` VARCHAR(20) NULL DEFAULT NULL COMMENT '캔들 기준 시각(KST 기준)',
+	`candle_date_time_utc` VARCHAR(20) NULL DEFAULT NULL COMMENT '캔들 기준 시각(UTC 기준)',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '입력시간'
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
 

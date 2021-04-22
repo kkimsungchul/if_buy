@@ -37,6 +37,13 @@ dependencies {
 
     //gson 사용을 위해 추가
     compile 'com.google.code.gson:gson:2.8.6'
+
+
+    //mybatis 사용을 위해 추가
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    compile 'mysql:mysql-connector-java'
+
 }
 
 test {

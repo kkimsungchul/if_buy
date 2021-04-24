@@ -3,6 +3,7 @@ package com.sungchul.ifbuy.coin.controller;
 
 import com.sungchul.ifbuy.coin.mapper.CoinMapper;
 import com.sungchul.ifbuy.coin.service.CoinService;
+import com.sungchul.ifbuy.coin.init.service.InitCoinThread;
 import com.sungchul.ifbuy.coin.vo.CoinVO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,15 @@ public class CoinController {
 
     @GetMapping("/coinList")
     public List<CoinVO> newCoin(){
-        return coinService.getCoinValue();
+        return coinService.getCoinInfo();
     }
+
+    @GetMapping("/admin/InitCoin")
+    public void InitCoin(){
+        InitCoinThread initCoinThread = new InitCoinThread();
+        initCoinThread.run();
+    }
+
 
     @GetMapping("/dbTest")
     public void dbTest(){

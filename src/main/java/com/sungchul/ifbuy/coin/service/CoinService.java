@@ -2,7 +2,6 @@ package com.sungchul.ifbuy.coin.service;
 
 
 import com.sungchul.ifbuy.coin.mapper.CoinMapper;
-import com.sungchul.ifbuy.coin.vo.CoinPriceVO;
 import com.sungchul.ifbuy.coin.vo.CoinVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +23,11 @@ public class CoinService {
 
     CoinMapper coinMapper;
 
+    /*
+    * 코인 목록 반환
+    * @param void
+    * @return List<CoinVO>
+    * */
     public List<CoinVO> getCoinInfo(){
 
         String url = "https://api.upbit.com/v1/market/all?isDetails=false";
@@ -87,24 +91,31 @@ public class CoinService {
 
         //log.info("### url : {}",url);
         //url = "https://api.upbit.com/v1/candles/minutes/1?market=KRW-BTC&count=1";
-        ResponseEntity<List<CoinPriceVO>> res = restTemplate.exchange(url.toString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CoinPriceVO>>() {});
+        ResponseEntity<List<CoinVO>> res = restTemplate.exchange(url.toString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CoinVO>>() {});
 
         //받아온 값을 리스트로 변환
-        List<CoinPriceVO> temp= res.getBody();
+        List<CoinVO> temp= res.getBody();
 
         //리스트에 들어있는 값을 VO로 변환
-        CoinPriceVO coinPriceVO = temp.get(0);
-        replaceDate(coinPriceVO);
-        coinVO.setCoinPriceVO(coinPriceVO);
+        CoinVO cvo = temp.get(0);
+        replaceDate(cvo);
+        cvo.setEnglishName(coinVO.getEnglishName());
+        cvo.setKoreanName(coinVO.getKoreanName());
+
 
         if(period.equalsIgnoreCase("days")){
-            coinMapper.insertCoinPriceDay(coinVO);
+            coinMapper.insertCoinPriceDay(cvo);
         }else if(period.equalsIgnoreCase("minutes")){
-            coinMapper.insertCoinPriceMinute(coinVO);
+            coinMapper.insertCoinPriceMinute(cvo);
         }
-        return coinVO;
+        return cvo;
     }
 
+
+    public List<CoinVO> selectCoinPrice(String coinName){
+
+        return coinMapper.selectCoinPrice(coinName);
+    }
 
 
 
@@ -117,10 +128,10 @@ public class CoinService {
         coinMapper.deleteCoinInfoMinute();;
     }
 
-    public CoinPriceVO replaceDate(CoinPriceVO coinPriceVO){
-        coinPriceVO.setCandleDateTimeKst(coinPriceVO.getCandleDateTimeKst().replace("T"," "));
-        coinPriceVO.setCandleDateTimeUtc(coinPriceVO.getCandleDateTimeUtc().replace("T",""));
-        return coinPriceVO;
+    public CoinVO replaceDate(CoinVO coinVO){
+        coinVO.setCandleDateTimeKst(coinVO.getCandleDateTimeKst().replace("T"," "));
+        coinVO.setCandleDateTimeUtc(coinVO.getCandleDateTimeUtc().replace("T",""));
+        return coinVO;
     }
 }
 

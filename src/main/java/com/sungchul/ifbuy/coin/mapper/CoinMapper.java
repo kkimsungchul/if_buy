@@ -3,7 +3,7 @@ package com.sungchul.ifbuy.coin.mapper;
 import com.sungchul.ifbuy.coin.vo.CoinVO;
 import org.apache.ibatis.annotations.*;
 
-
+import java.util.List;
 
 
 public interface CoinMapper {
@@ -28,15 +28,15 @@ public interface CoinMapper {
             "#{koreanName}, " +
             "#{englishName}, " +
             "#{market}, " +
-            "#{coinPriceVO.openingPrice}, " +
-            "#{coinPriceVO.highPrice}, " +
-            "#{coinPriceVO.lowPrice}, " +
-            "#{coinPriceVO.tradePrice}, " +
-            "#{coinPriceVO.candleAccTradePrice}, " +
-            "#{coinPriceVO.candleAccTradeVolume}, " +
-            "#{coinPriceVO.unit}, " +
-            "#{coinPriceVO.candleDateTimeKst}, " +
-            "#{coinPriceVO.candleDateTimeUtc}) ")
+            "#{openingPrice}, " +
+            "#{highPrice}, " +
+            "#{lowPrice}, " +
+            "#{tradePrice}, " +
+            "#{candleAccTradePrice}, " +
+            "#{candleAccTradeVolume}, " +
+            "#{unit}, " +
+            "#{candleDateTimeKst}, " +
+            "#{candleDateTimeUtc}) ")
     public void insertCoinPriceMinute(CoinVO coinVO);
 
 
@@ -57,19 +57,23 @@ public interface CoinMapper {
             "#{koreanName}, " +
             "#{englishName}, " +
             "#{market}, " +
-            "#{coinPriceVO.openingPrice}, " +
-            "#{coinPriceVO.highPrice}, " +
-            "#{coinPriceVO.lowPrice}, " +
-            "#{coinPriceVO.tradePrice}, " +
-            "#{coinPriceVO.candleAccTradePrice}, " +
-            "#{coinPriceVO.candleAccTradeVolume}, " +
-            "#{coinPriceVO.unit}, " +
-            "#{coinPriceVO.candleDateTimeKst}, " +
-            "#{coinPriceVO.candleDateTimeUtc}) ")
+            "#{openingPrice}, " +
+            "#{highPrice}, " +
+            "#{lowPrice}, " +
+            "#{tradePrice}, " +
+            "#{candleAccTradePrice}, " +
+            "#{candleAccTradeVolume}, " +
+            "#{unit}, " +
+            "#{candleDateTimeKst}, " +
+            "#{candleDateTimeUtc}) ")
     public void insertCoinPriceDay(CoinVO coinVO);
 
 
     @Delete("TRUNCATE coin_price_minute")
     public void deleteCoinInfoMinute();
 
+
+    @Select("SELECT * FROM coin_price_day " +
+            "WHERE market = #{coinName}")
+    public List<CoinVO> selectCoinPrice(String coinName);
 }

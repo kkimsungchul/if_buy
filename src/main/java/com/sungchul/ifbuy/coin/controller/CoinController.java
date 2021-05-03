@@ -6,6 +6,7 @@ import com.sungchul.ifbuy.coin.service.CoinService;
 import com.sungchul.ifbuy.coin.init.service.InitCoinThread;
 import com.sungchul.ifbuy.coin.vo.CoinVO;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,15 +15,23 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("coin")
+@Slf4j
 public class CoinController {
 
 
     private CoinService coinService;
     private CoinMapper coinMapper;
 
-    @GetMapping("/coinList")
-    public List<CoinVO> newCoin(){
+    @GetMapping("/coin")
+    public List<CoinVO> coinList(){
         return coinService.getCoinInfo();
+    }
+
+    @GetMapping("/coin/{coinName}")
+    public List<CoinVO> selectCoinPrice(@PathVariable("coinName") String coinName){
+
+        log.info("###selectCoinPriceDetail : {}",coinName);
+        return coinService.selectCoinPrice(coinName);
     }
 
     @GetMapping("/admin/InitCoin")

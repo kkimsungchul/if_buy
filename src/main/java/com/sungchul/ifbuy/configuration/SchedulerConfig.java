@@ -1,4 +1,4 @@
-package com.sungchul.ifbuy.coin.job;
+package com.sungchul.ifbuy.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;

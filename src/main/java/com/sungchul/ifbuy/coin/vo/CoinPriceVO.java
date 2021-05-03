@@ -1,3 +1,4 @@
+/*
 package com.sungchul.ifbuy.coin.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -51,3 +52,4 @@ public class CoinPriceVO {
     String unit;
 
 }
+*/

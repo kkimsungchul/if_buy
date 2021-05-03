@@ -31,3 +31,7 @@ logging:
         descriptor:
         sql:
           BasicBinder: TRACE
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

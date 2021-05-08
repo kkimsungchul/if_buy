@@ -2,16 +2,38 @@
 function getCoinList() {
     var returnData;
     $.ajax({
-        url : "/coin/coinList",
+        url : "/coin/coin",
         type : "GET",
-        dataType : "json",
+        async: false,
         data : {},
         success : function (data){
             console.log(data)
             returnData = data;
-        },error : function (data) {
-            console.log(data)
+            return returnData;
+        },error : function (e) {
+            console.log(e)
         }
+    });
+}
+
+function getCoinDetail(coinName){
+
+    $.ajax({
+        url: "/coin/coin/"+coinName,
+        type : "GET",
+        data : {},
+        success : function (data){
+            console.log(data);
+
+        },error : function (e){
+            console.log(e);
+
+        }
+
     })
-    return returnData;
+
+
+
+
+
 }

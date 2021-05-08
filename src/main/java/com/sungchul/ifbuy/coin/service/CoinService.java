@@ -14,6 +14,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service("coinService")
@@ -41,11 +42,23 @@ public class CoinService {
        /* log.info("### resList : {}" ,resList);*/
         List<CoinVO> coinList =  resList.getBody();
 
+        coinList = coinFilter(coinList);
 /*        for(int i=0;i< resList.getBody().size();i++){
             log.info("### resList : {}" , resList.getBody().get(i));
         }*/
         return coinList;
     }
+
+    public List<CoinVO> coinFilter(List<CoinVO> coinList){
+        Iterator iterator = coinList.iterator();
+        while(iterator.hasNext()){
+            CoinVO coinVO = (CoinVO)iterator.next();
+            if (!coinVO.getMarket().contains("KRW")) {
+                iterator.remove();
+            }
+        }
+        return coinList;
+    };
 
 /*    public List<CoinVO> getCoinPrice(){
         List<CoinVO> coinPriceList = getCoinInfo();
@@ -78,6 +91,11 @@ public class CoinService {
         return coinPriceList;
     }*/
 
+    public List<CoinVO> getCoinList(){
+        List<CoinVO> coinList = coinMapper.getCoinList();
+
+        return coinList;
+    }
 
 
     public CoinVO getCoinPrice(CoinVO coinVO, String url,String period){

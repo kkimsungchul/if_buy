@@ -73,6 +73,20 @@ public interface CoinMapper {
     public void deleteCoinInfoMinute();
 
 
+    @Select("SELECT  " +
+            "market,  " +
+            "english_name,  " +
+            "korean_name ,  " +
+            "trade_price , " +
+            "candle_date_time_kst , " +
+            "create_time " +
+            "FROM coin_price_minute  " +
+            "WHERE (korean_name,create_time) IN ( " +
+            "SELECT korean_name, max(create_time) FROM coin_price_minute " +
+            "GROUP BY korean_name " +
+            ")ORDER BY candle_date_time_kst DESC")
+    public List<CoinVO> getCoinList();
+
     @Select("SELECT * FROM coin_price_day " +
             "WHERE market = #{coinName}")
     public List<CoinVO> selectCoinPrice(String coinName);

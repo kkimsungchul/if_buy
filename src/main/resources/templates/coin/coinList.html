@@ -6,6 +6,11 @@
     <script th:inline="javascript" th:src="@{/js/jquery-3.6.0.js}"></script>
     <script th:inline="javascript" th:src="@{/js/coin.js}"></script>
     
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.min.js"></script>
+    
 </head>
 <!--게시글 목록 페이지-->
 <body>
@@ -15,14 +20,88 @@
 <div id="content">
     <script th:inline="javascript">
         $(document).ready(function(){
-            getCoinList();
+          
+            coinList();
         });
+
+        
+        function coinList(){
+            var secondGrid = new ax5.ui.grid({
+                target: $('[data-ax5grid="second-grid"]'),
+                header: {
+                    align: "center"
+                },
+                sortable: true,
+                columns: [
+                    {key: "market", label: "마켓 구분", width: 80},
+                    {key: "english_name", label: "코인명(영어)", width: 200},
+                    /*{key: "korean_name", label: "코인명(한글)", width: 150, sortable: true, align: "left"},*/
+                    {key: "korean_name", label: "코인명(한글)", width: 150},
+                    {key: "trade_price", label: "현재 거래가", width: 200, align :"right",sortable : false,formatter: function(){
+                            var temp1 = this.value.split(".");
+                            var temp2 = temp1[0]  + "." +temp1[1].substr(0,2);
+                            return temp2;
+                        }},
+                    {key: "candle_date_time_kst", label: "기준 시간", width: 150},
+
+                ]
+            });
+            
+            /*코인목록 반환*/
+            $.ajax({
+                url : "/coin/coin",
+                type: "GET",
+                success : function (data) {
+                    secondGrid.setData(data);
+                }
+            })
+//            secondGrid.setData(data);
+/*            var tempList = getCoinList();
+            console.log(tempList);
+            
+            secondGrid.setData(tempList);*/
+
+        }
+
+
+        
+        
     </script>
     
 </div>
 
 
+<!--<a href="/coin/coin/KRW-BTC">비트코인</a>-->
 
+<!--<button onclick="javascript:getCoinDetail('KRW-BTC')"></button>-->
+
+
+<!--
+frozenColumnIndex : 행 고정
+frozenRowIndex : 열 고정
+showLineNumber : 좌측 라인 넘버
+showRowSelector : 좌측 셀렉트 박스
+lineNumberColumnWidth: 라인넘어 넓이
+rowSelectorColumnWidth: 셀릭트 박스 넓이
+-->
+<div data-ax5grid="second-grid" data-ax5grid-config="{
+                    frozenColumnIndex: 0,
+                    frozenRowIndex: 0,
+                    showLineNumber: true,
+                    showRowSelector: false,
+                    lineNumberColumnWidth: 40,
+                }" style="height: 700px; width: 830px;"></div>
+
+<!--
+<div data-ax5grid="second-grid" data-ax5grid-config="{
+                    frozenColumnIndex: 0,
+                    frozenRowIndex: 0,
+                    showLineNumber: true,
+                    showRowSelector: true,
+                    lineNumberColumnWidth: 40,
+                    rowSelectorColumnWidth: 26
+                }" style="height: 300px; width: 930px;"></div>
+-->
 
 
 <div th:insert="common/footer.html" id="footer"></div>

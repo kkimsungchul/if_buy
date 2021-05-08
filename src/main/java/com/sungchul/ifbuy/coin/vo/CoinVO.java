@@ -56,5 +56,9 @@ public class CoinVO {
     @JsonProperty("unit")
     String unit;
 
+    //데이터 저장 시간
+    @JsonProperty("create_time")
+    String createTime;
+
 
 }

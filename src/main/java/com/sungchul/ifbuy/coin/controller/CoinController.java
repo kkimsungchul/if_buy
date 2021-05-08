@@ -24,7 +24,9 @@ public class CoinController {
 
     @GetMapping("/coin")
     public List<CoinVO> coinList(){
-        return coinService.getCoinInfo();
+        return coinService.getCoinList();
+
+        //return coinService.getCoinInfo();
     }
 
     @GetMapping("/coin/{coinName}")

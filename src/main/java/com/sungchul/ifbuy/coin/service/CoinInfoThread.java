@@ -14,28 +14,29 @@ public class CoinInfoThread extends Thread {
     }
 
     public void run(String period){
-        List<CoinVO> coinList = coinService.getCoinInfo();
-        String url;
-        try {
-            System.out.println("CoinInfoThread Start~~");
-            for (int i =0;i<coinList.size();i++){
-                //원화마켓만
-                if (coinList.get(i).getMarket().contains("KRW")){
-                    url = getUpbitURL(period,coinList.get(i).getMarket());
-                    coinService.getCoinPrice(coinList.get(i) , url,period);
-                }
-                if(i%10==0){
-                    Thread.sleep(1000);
-                }
-            }
-            System.out.println("CoinInfoThread End~~");
-        }catch (InterruptedException e){
-            System.out.println(e);
-        }
+//        List<CoinVO> coinList = coinService.getCoinInfo();
+//        String url;
+//        try {
+//            System.out.println("CoinInfoThread Start~~");
+//            for (int i =0;i<coinList.size();i++){
+//                //원화마켓만
+//                if (coinList.get(i).getMarket().contains("KRW")){
+//                    url = getUpbitURL(period,coinList.get(i).getMarket());
+//                    coinService.getCoinPrice(coinList.get(i) , url,period);
+//                }
+//                if(i%10==0){
+//                    Thread.sleep(1000);
+//                }
+//            }
+//            System.out.println("CoinInfoThread End~~");
+//        }catch (InterruptedException e){
+//            System.out.println(e);
+//        }
     }
 
 
-
+    ///https://api.upbit.com/v1/market/all?isDetails=false
+    //https://api.upbit.com/v1/candles/minutes/1?market=KRW-BTC
 
     public String getUpbitURL(String period,String market){
         String url="";
